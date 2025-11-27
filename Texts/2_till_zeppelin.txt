@@ -1,0 +1,294 @@
+Perfect — you’ve built a **complete local big-data pipeline** with **Kafka → Spark (via Zeppelin) → Grafana/Mongo/Influx**.
+Here’s your full **one-page cheat sheet** 🚀 — ready to share with your teammates.
+
+---
+
+## ⚡ ELECTRICITY LOAD STREAMING PIPELINE (WSL + Docker + Spark + Zeppelin)
+
+### 🧩 **Project Overview**
+
+Stream real-time CSV data of 36 Indian states → Kafka → Apache Spark (via Zeppelin UI) for processing and visualization.
+
+---
+
+## 🧱 1️⃣ PREREQUISITES
+
+Make sure you have these installed in **WSL Ubuntu**:
+
+```bash
+sudo apt update
+sudo apt install -y openjdk-11-jdk python3-pip docker.io docker-compose net-tools wget curl nano
+```
+
+Then install Python libraries:
+
+```bash
+pip3 install kafka-python
+```
+
+---
+
+## 🐳 2️⃣ START DOCKER SERVICES
+
+Go to your project folder:
+
+```bash
+cd ~/bigdata-stack
+```
+
+Bring up all containers (Zookeeper, Kafka, MongoDB, InfluxDB, Grafana):
+
+```bash
+sudo docker-compose up -d
+```
+
+Check they’re running:
+
+```bash
+docker ps
+```
+
+✅ You should see containers for:
+
+```
+zookeeper, kafka, mongodb, influxdb, grafana
+```
+
+---
+
+## 💾 3️⃣ CREATE KAFKA TOPIC
+
+```bash
+docker exec -it kafka kafka-topics \
+  --create --topic electricity_topic \
+  --bootstrap-server localhost:9092 \
+  --partitions 1 --replication-factor 1
+```
+
+---
+
+## 📂 4️⃣ PLACE THE DATASET
+
+Move your CSV file inside WSL:
+
+```bash
+mkdir -p ~/data
+cp /mnt/c/Users/DEV/OneDrive/Desktop/Minor\ Project/Project/Data/synthetic_indian_load_data.csv ~/data/
+```
+
+✅ File should now exist at:
+
+```
+/home/devpandya/data/synthetic_indian_load_data.csv
+```
+
+---
+
+## ⚙️ 5️⃣ RUN THE KAFKA PRODUCER
+
+Create the producer script:
+
+```bash
+nano ~/bigdata-stack/producer_electricity.py
+```
+
+Paste this code 👇
+
+```python
+from kafka import KafkaProducer
+import csv, json, time, os
+
+csv_path = "/home/devpandya/data/synthetic_indian_load_data.csv"
+topic_name = "electricity_topic"
+batch_interval = 10
+
+if not os.path.exists(csv_path):
+    raise FileNotFoundError(f"CSV file not found: {csv_path}")
+
+producer = KafkaProducer(
+    bootstrap_servers=["localhost:9092"],
+    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+    acks="all",
+    retries=3
+)
+
+with open(csv_path, "r") as f:
+    reader = csv.DictReader(f)
+    rows = list(reader)
+
+timestamps = sorted(set(row["Timestamp_UTC"] for row in rows))
+
+for ts in timestamps:
+    batch = [r for r in rows if r["Timestamp_UTC"] == ts]
+    for record in batch:
+        for key in ["Gross_Load_MW","Hour_Of_Day","Day_Of_Week","Is_Weekend","Is_Holiday_State","Avg_Temp_C","Temp_Change_6H","Avg_Humidity_Pct"]:
+            record[key] = float(record[key]) if "." in record[key] else int(record[key])
+        producer.send(topic_name, record)
+    producer.flush()
+    print(f"✅ Sent {len(batch)} records for timestamp {ts}")
+    time.sleep(batch_interval)
+
+print("✅ All batches sent successfully.")
+```
+
+Run it:
+
+```bash
+python3 producer_electricity.py
+```
+
+You’ll see:
+
+```
+✅ Sent 36 records for timestamp 2024-01-01 00:00:00
+...
+```
+
+---
+
+## 🧠 6️⃣ START APACHE ZEPPELIN
+
+### 🟢 Start Zeppelin
+
+```bash
+cd /opt/zeppelin
+bin/zeppelin-daemon.sh start
+```
+
+Check if it’s running:
+
+```bash
+sudo netstat -tuln | grep 8080
+```
+
+→ Should show `:::8080 LISTEN`
+
+Then open **[http://localhost:8080](http://localhost:8080)** in Windows browser.
+
+---
+
+## ⚡ 7️⃣ CONFIGURE SPARK INTERPRETER IN ZEPPELIN
+
+In Zeppelin UI:
+
+* Go to ⚙️ → **Interpreter**
+* Search `spark`
+* Add dependencies:
+
+  ```
+  org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.3
+  ```
+* Save & Restart Interpreter
+
+---
+
+## 🔥 8️⃣ CREATE A NEW NOTEBOOK
+
+In Zeppelin → **Create new note** → Name: `Electricity Stream`
+
+Then paste each paragraph below.
+
+---
+
+### 🔹 Paragraph 1: Connect to Kafka
+
+```scala
+%spark
+val df = spark.readStream
+  .format("kafka")
+  .option("kafka.bootstrap.servers", "localhost:9092")
+  .option("subscribe", "electricity_topic")
+  .load()
+```
+
+---
+
+### 🔹 Paragraph 2: Define Schema
+
+```scala
+import org.apache.spark.sql.types._
+
+val jsonSchema = StructType(Array(
+  StructField("State_Code", StringType),
+  StructField("Timestamp_UTC", StringType),
+  StructField("Gross_Load_MW", DoubleType),
+  StructField("Hour_Of_Day", IntegerType),
+  StructField("Day_Of_Week", IntegerType),
+  StructField("Is_Weekend", IntegerType),
+  StructField("Is_Holiday_State", IntegerType),
+  StructField("Avg_Temp_C", DoubleType),
+  StructField("Temp_Change_6H", DoubleType),
+  StructField("Avg_Humidity_Pct", DoubleType)
+))
+```
+
+---
+
+### 🔹 Paragraph 3: Parse JSON Data
+
+```scala
+import org.apache.spark.sql.functions._
+
+val parsed = df.selectExpr("CAST(value AS STRING) as json")
+  .select(from_json(col("json"), jsonSchema).as("data"))
+  .select("data.*")
+```
+
+---
+
+### 🔹 Paragraph 4: Display Live Stream
+
+```scala
+parsed.writeStream
+  .format("console")
+  .outputMode("append")
+  .option("truncate", "false")
+  .start()
+```
+
+---
+
+✅ **Now you’ll see new rows every 10 seconds!**
+
+---
+
+## 📊 9️⃣ OPTIONAL: VISUALIZE IN GRAFANA
+
+You can connect **Grafana → InfluxDB** or **Grafana → MongoDB**
+to visualize trends like:
+
+* Gross load per state
+* Temperature correlation
+* Hourly changes
+
+---
+
+## 🧹 🔟 SHUTDOWN COMMANDS
+
+To stop everything cleanly:
+
+```bash
+/opt/zeppelin/bin/zeppelin-daemon.sh stop
+docker-compose down
+```
+
+---
+
+### 💡 Bonus Tip:
+
+To make it reusable by your friends:
+
+1. Zip the folder `bigdata-stack` + your `producer_electricity.py`.
+2. Share this cheat sheet as `README.md`.
+3. Tell them to just:
+
+   ```bash
+   docker-compose up -d
+   python3 producer_electricity.py
+   ```
+
+   and open [http://localhost:8080](http://localhost:8080).
+
+---
+
+Would you like me to include **MongoDB write stream** (so Spark also stores the processed data automatically for visualization in Grafana)?

@@ -1,0 +1,376 @@
+PS C:\Users\DEV\Desktop\Minor Project> & C:/Users/DEV/AppData/Local/Programs/Python/Python311/python.exe "c:/Users/DEV/Desktop/Minor Project/Project/Codes/train_state_residual_models_Version5.py"
+=== Loading dataset ===
+Total rows after dropping missing target: 315276
+=== Adding time-series features ===
+Total rows after dropping NaNs from lag/rolling: 307677
+=== Global time-based split ===
+Train size: 215373, Val size: 46152, Test size: 46152
+=== Training GLOBAL model ===
+[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.002128 seconds.
+You can set `force_row_wise=true` to remove the overhead.
+And if memory is not enough, you can set `force_col_wise=true`.
+[LightGBM] [Info] Total Bins 2913
+[LightGBM] [Info] Number of data points in the train set: 215373, number of used features: 51
+[LightGBM] [Info] Start training from score 24933.554655
+=== Evaluating GLOBAL model ===
+
+Global model performance (Validation):
+  MAE  : 1169.139
+  RMSE : 3369.467
+  MAPE : 5.61%
+
+Global model performance (Test):
+  MAE  : 2796.774
+  RMSE : 8649.109
+  MAPE : 5.79%
+
+Saving GLOBAL model to models\global_model.joblib
+
+=== Training PER-STATE residual models (corrections) ===
+  Training residual model for state AN on 5973 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000335 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5973, number of used features: 15
+[LightGBM] [Info] Start training from score -10.575816
+    AN GLOBAL   Test RMSE=42.154, MAPE=10.22%
+    AN CORRECTED Test RMSE=30.169, MAPE=7.91% (improvement=28.43%)
+      -> SAVED residual model for state AN (improved).
+  Training residual model for state AP on 5989 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000287 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5989, number of used features: 15
+[LightGBM] [Info] Start training from score 7.755353
+    AP GLOBAL   Test RMSE=2110.005, MAPE=1.19%
+    AP CORRECTED Test RMSE=2600.027, MAPE=1.96% (improvement=-23.22%)
+      -> NOT saving model for state AP (improvement too small).
+  Training residual model for state AR on 5987 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000272 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5987, number of used features: 15
+[LightGBM] [Info] Start training from score -2.535602
+    AR GLOBAL   Test RMSE=1774.785, MAPE=13.10%
+    AR CORRECTED Test RMSE=2767.118, MAPE=25.61% (improvement=-55.91%)
+      -> NOT saving model for state AR (improvement too small).
+  Training residual model for state AS on 5985 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000271 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5985, number of used features: 15
+[LightGBM] [Info] Start training from score 8.461336
+    AS GLOBAL   Test RMSE=453.428, MAPE=2.69%
+    AS CORRECTED Test RMSE=1747.286, MAPE=13.63% (improvement=-285.35%)
+      -> NOT saving model for state AS (improvement too small).
+  Training residual model for state BH on 5983 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000289 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5983, number of used features: 15
+[LightGBM] [Info] Start training from score 11.971288
+    BH GLOBAL   Test RMSE=893.175, MAPE=0.84%
+    BH CORRECTED Test RMSE=1680.079, MAPE=1.75% (improvement=-88.10%)
+      -> NOT saving model for state BH (improvement too small).
+  Training residual model for state CH on 5984 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000290 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5984, number of used features: 15
+[LightGBM] [Info] Start training from score -22.054411
+    CH GLOBAL   Test RMSE=697.393, MAPE=11.95%
+    CH CORRECTED Test RMSE=1121.559, MAPE=26.78% (improvement=-60.82%)
+      -> NOT saving model for state CH (improvement too small).
+  Training residual model for state CHH on 5979 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000470 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5979, number of used features: 15
+[LightGBM] [Info] Start training from score 4.416039
+    CHH GLOBAL   Test RMSE=1239.457, MAPE=3.00%
+    CHH CORRECTED Test RMSE=3141.118, MAPE=10.13% (improvement=-153.43%)
+      -> NOT saving model for state CHH (improvement too small).
+  Training residual model for state DL on 5974 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000295 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5974, number of used features: 15
+[LightGBM] [Info] Start training from score 3.487236
+    DL GLOBAL   Test RMSE=1524.063, MAPE=1.45%
+    DL CORRECTED Test RMSE=1927.966, MAPE=1.94% (improvement=-26.50%)
+      -> NOT saving model for state DL (improvement too small).
+  Training residual model for state DNHD on 5978 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000319 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5978, number of used features: 15
+[LightGBM] [Info] Start training from score -11.685334
+    DNHD GLOBAL   Test RMSE=65.791, MAPE=6.34%
+    DNHD CORRECTED Test RMSE=70.688, MAPE=7.16% (improvement=-7.44%)
+      -> NOT saving model for state DNHD (improvement too small).
+  Training residual model for state GA on 5975 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000305 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5975, number of used features: 15
+[LightGBM] [Info] Start training from score 17.744794
+    GA GLOBAL   Test RMSE=351.579, MAPE=6.09%
+    GA CORRECTED Test RMSE=273.496, MAPE=4.11% (improvement=22.21%)
+      -> SAVED residual model for state GA (improved).
+  Training residual model for state GJ on 5984 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000344 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5984, number of used features: 15
+[LightGBM] [Info] Start training from score 12.019704
+    GJ GLOBAL   Test RMSE=2603.985, MAPE=1.57%
+    GJ CORRECTED Test RMSE=2639.369, MAPE=1.63% (improvement=-1.36%)
+      -> NOT saving model for state GJ (improvement too small).
+  Training residual model for state HP on 5982 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000291 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5982, number of used features: 15
+[LightGBM] [Info] Start training from score -7.251874
+    HP GLOBAL   Test RMSE=3417.612, MAPE=11.04%
+    HP CORRECTED Test RMSE=5115.920, MAPE=18.43% (improvement=-49.69%)
+      -> NOT saving model for state HP (improvement too small).
+  Training residual model for state HR on 5995 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000347 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5995, number of used features: 15
+[LightGBM] [Info] Start training from score 4.957216
+    HR GLOBAL   Test RMSE=1405.497, MAPE=1.77%
+    HR CORRECTED Test RMSE=2849.298, MAPE=4.50% (improvement=-102.73%)
+      -> NOT saving model for state HR (improvement too small).
+  Training residual model for state JH on 5986 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000309 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5986, number of used features: 15
+[LightGBM] [Info] Start training from score -8.999999
+    JH GLOBAL   Test RMSE=198.638, MAPE=6.26%
+    JH CORRECTED Test RMSE=1129.421, MAPE=45.41% (improvement=-468.58%)
+      -> NOT saving model for state JH (improvement too small).
+  Training residual model for state JK on 5981 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000266 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5981, number of used features: 15
+[LightGBM] [Info] Start training from score -14.753642
+    JK GLOBAL   Test RMSE=1135.425, MAPE=8.23%
+    JK CORRECTED Test RMSE=712.785, MAPE=5.11% (improvement=37.22%)
+      -> SAVED residual model for state JK (improved).
+  Training residual model for state KA on 5979 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000329 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5979, number of used features: 15
+[LightGBM] [Info] Start training from score 12.288173
+    KA GLOBAL   Test RMSE=1778.336, MAPE=1.20%
+    KA CORRECTED Test RMSE=2440.854, MAPE=2.18% (improvement=-37.25%)
+      -> NOT saving model for state KA (improvement too small).
+  Training residual model for state KL on 5974 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000344 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5974, number of used features: 15
+[LightGBM] [Info] Start training from score -0.006280
+    KL GLOBAL   Test RMSE=624.172, MAPE=1.74%
+    KL CORRECTED Test RMSE=977.502, MAPE=3.89% (improvement=-56.61%)
+      -> NOT saving model for state KL (improvement too small).
+  Training residual model for state LA on 5998 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000576 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5998, number of used features: 15
+[LightGBM] [Info] Start training from score -15.910523
+    LA GLOBAL   Test RMSE=2884.697, MAPE=7.38%
+    LA CORRECTED Test RMSE=1928.415, MAPE=4.75% (improvement=33.15%)
+      -> SAVED residual model for state LA (improved).
+  Training residual model for state LD on 5976 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000342 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5976, number of used features: 15
+[LightGBM] [Info] Start training from score -17.501308
+    LD GLOBAL   Test RMSE=52.886, MAPE=12.05%
+    LD CORRECTED Test RMSE=40.580, MAPE=10.28% (improvement=23.27%)
+      -> SAVED residual model for state LD (improved).
+  Training residual model for state MH on 5984 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000284 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5984, number of used features: 15
+[LightGBM] [Info] Start training from score 24.931382
+    MH GLOBAL   Test RMSE=41217.698, MAPE=21.69%
+    MH CORRECTED Test RMSE=38058.175, MAPE=19.92% (improvement=7.67%)
+      -> SAVED residual model for state MH (improved).
+  Training residual model for state ML on 5982 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000396 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5982, number of used features: 15
+[LightGBM] [Info] Start training from score -3.768707
+    ML GLOBAL   Test RMSE=187.959, MAPE=5.26%
+    ML CORRECTED Test RMSE=640.904, MAPE=25.12% (improvement=-240.98%)
+      -> NOT saving model for state ML (improvement too small).
+  Training residual model for state MN on 5980 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000650 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5980, number of used features: 15
+[LightGBM] [Info] Start training from score 5.835457
+    MN GLOBAL   Test RMSE=125.606, MAPE=3.71%
+    MN CORRECTED Test RMSE=796.326, MAPE=31.71% (improvement=-533.99%)
+      -> NOT saving model for state MN (improvement too small).
+  Training residual model for state MP on 5979 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000342 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5979, number of used features: 15
+[LightGBM] [Info] Start training from score -17.597340
+    MP GLOBAL   Test RMSE=1316.575, MAPE=2.46%
+    MP CORRECTED Test RMSE=4301.787, MAPE=10.10% (improvement=-226.74%)
+      -> NOT saving model for state MP (improvement too small).
+  Training residual model for state MZ on 5990 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000281 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5990, number of used features: 15
+[LightGBM] [Info] Start training from score 5.523215
+    MZ GLOBAL   Test RMSE=112.820, MAPE=3.50%
+    MZ CORRECTED Test RMSE=808.510, MAPE=35.12% (improvement=-616.64%)
+      -> NOT saving model for state MZ (improvement too small).
+  Training residual model for state NL on 5982 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000394 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5982, number of used features: 15
+[LightGBM] [Info] Start training from score 10.985146
+    NL GLOBAL   Test RMSE=196.110, MAPE=5.37%
+    NL CORRECTED Test RMSE=628.965, MAPE=22.25% (improvement=-220.72%)
+      -> NOT saving model for state NL (improvement too small).
+  Training residual model for state OD on 5986 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000642 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5986, number of used features: 15
+[LightGBM] [Info] Start training from score 2.468109
+    OD GLOBAL   Test RMSE=2079.761, MAPE=1.11%
+    OD CORRECTED Test RMSE=2421.891, MAPE=1.83% (improvement=-16.45%)
+      -> NOT saving model for state OD (improvement too small).
+  Training residual model for state PB on 5991 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000265 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5991, number of used features: 15
+[LightGBM] [Info] Start training from score -12.226153
+    PB GLOBAL   Test RMSE=1405.431, MAPE=2.30%
+    PB CORRECTED Test RMSE=3096.452, MAPE=6.96% (improvement=-120.32%)
+      -> NOT saving model for state PB (improvement too small).
+  Training residual model for state PD on 5979 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000278 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5979, number of used features: 15
+[LightGBM] [Info] Start training from score -25.493746
+    PD GLOBAL   Test RMSE=79.594, MAPE=6.02%
+    PD CORRECTED Test RMSE=390.456, MAPE=36.36% (improvement=-390.56%)
+      -> NOT saving model for state PD (improvement too small).
+  Training residual model for state RJ on 5973 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000500 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5973, number of used features: 15
+[LightGBM] [Info] Start training from score 15.357039
+    RJ GLOBAL   Test RMSE=6613.449, MAPE=2.96%
+    RJ CORRECTED Test RMSE=6594.687, MAPE=2.92% (improvement=0.28%)
+      -> NOT saving model for state RJ (improvement too small).
+  Training residual model for state SK on 5986 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000334 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5986, number of used features: 15
+[LightGBM] [Info] Start training from score -12.227413
+    SK GLOBAL   Test RMSE=1384.830, MAPE=15.86%
+    SK CORRECTED Test RMSE=1902.865, MAPE=25.81% (improvement=-37.41%)
+      -> NOT saving model for state SK (improvement too small).
+  Training residual model for state TN on 5991 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000316 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5991, number of used features: 15
+[LightGBM] [Info] Start training from score 24.126515
+    TN GLOBAL   Test RMSE=2446.176, MAPE=1.36%
+    TN CORRECTED Test RMSE=4378.175, MAPE=3.12% (improvement=-78.98%)
+      -> NOT saving model for state TN (improvement too small).
+  Training residual model for state TR on 5981 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000291 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5981, number of used features: 15
+[LightGBM] [Info] Start training from score -19.481927
+    TR GLOBAL   Test RMSE=81.231, MAPE=4.76%
+    TR CORRECTED Test RMSE=237.758, MAPE=16.59% (improvement=-192.69%)
+      -> NOT saving model for state TR (improvement too small).
+  Training residual model for state TS on 5983 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000280 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5983, number of used features: 15
+[LightGBM] [Info] Start training from score 10.670935
+    TS GLOBAL   Test RMSE=2848.626, MAPE=1.45%
+    TS CORRECTED Test RMSE=4197.278, MAPE=2.86% (improvement=-47.34%)
+      -> NOT saving model for state TS (improvement too small).
+  Training residual model for state UK on 5970 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000281 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5970, number of used features: 15
+[LightGBM] [Info] Start training from score -8.322902
+    UK GLOBAL   Test RMSE=2539.013, MAPE=5.17%
+    UK CORRECTED Test RMSE=4633.365, MAPE=11.04% (improvement=-82.49%)
+      -> NOT saving model for state UK (improvement too small).
+  Training residual model for state UP on 5986 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000307 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5986, number of used features: 15
+[LightGBM] [Info] Start training from score 2.013683
+    UP GLOBAL   Test RMSE=29481.324, MAPE=16.22%
+    UP CORRECTED Test RMSE=30242.223, MAPE=16.74% (improvement=-2.58%)
+      -> NOT saving model for state UP (improvement too small).
+  Training residual model for state WB on 5988 samples
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.000294 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 2841
+[LightGBM] [Info] Number of data points in the train set: 5988, number of used features: 15
+[LightGBM] [Info] Start training from score 25.326336
+    WB GLOBAL   Test RMSE=2279.672, MAPE=1.31%
+    WB CORRECTED Test RMSE=2309.365, MAPE=1.29% (improvement=-1.30%)
+      -> NOT saving model for state WB (improvement too small).
+
+=== SUMMARY ===
+Global test RMSE : 8649.109
+Global test MAPE : 5.79%
+States with saved residual models (improved > 5.0%):
+AN, GA, JK, LA, LD, MH
+States with saved residual models (improved > 5.0%):
+States with saved residual models (improved > 5.0%):
+AN, GA, JK, LA, LD, MH
+
+Per-state RMSE comparison (top 10 by improvement):
+state  rmse_global  rmse_corrected  rel_improvement
+   JK  1135.425025      712.785128         0.372231
+   LA  2884.696922     1928.415001         0.331502
+   AN    42.154155       30.169069         0.284316
+   LD    52.885912       40.579858         0.232691
+   GA   351.578837      273.496320         0.222091
+   MH 41217.697858    38058.174698         0.076655
+   RJ  6613.448782     6594.687305         0.002837
+   WB  2279.672208     2309.364607        -0.013025
+   GJ  2603.985072     2639.368757        -0.013588
+   UP 29481.324260    30242.223194        -0.025810
+PS C:\Users\DEV\Desktop\Minor Project>

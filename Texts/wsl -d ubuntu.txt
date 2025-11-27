@@ -1,0 +1,9 @@
+wsl -d ubuntu
+cd ~/bigdata-stack
+docker compose up -d
+sudo /opt/zeppelin/bin/zeppelin-daemon.sh start
+source zeppelin_venv/bin/activate
+
+
+
+python3 producer_electricity.py

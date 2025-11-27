@@ -1,0 +1,321 @@
+
+################################################################################
+# COMPLETE MODEL TRAINING PIPELINE
+# Training Date: 2025-11-27 00:15:19
+# Data Source: REALISTIC (with anomalies)
+################################################################################
+
+================================================================================
+STEP 0: DATA PREPARATION
+================================================================================
+📂 Loading data from: C:\Users\DEV\Desktop\Minor Project\Project\Data\generate_visualize\synthetic_indian_load_data.csv
+   ✓ Loaded 316,224 rows, 36 states
+   ✓ Dropped 0 rows with missing targets
+
+📈 Adding time-series features...
+   Lags: [1, 2, 3, 24, 168]
+   Rolling windows: [3, 24, 168]
+   ✓ Dropped 6048 rows with NaN features
+
+📊 Time-based split (70/15/15)...
+   Train: 217,123 samples
+   Val:   46,526 samples
+   Test:  46,527 samples
+
+   Features (16): 
+   State_Code, Hour_Of_Day, Day_Of_Week, Is_Weekend, Is_Holiday_State, Avg_Temp_C, Temp_Change_6H, Avg_Humidity_Pct, Load_lag_1h, Load_lag_2h, Load_lag_3h, Load_lag_24h, Load_lag_168h, Load_roll_mean_3h, Load_roll_mean_24h, Load_roll_mean_168h
+
+================================================================================
+STEP 1: TRAINING GLOBAL MODEL
+================================================================================
+
+🔧 Building global LightGBM model...
+   Architecture: OneHotEncoder(State_Code) + LightGBM Regressor
+📚 Training on 217123 samples...
+
+📊 Evaluating on validation set...
+   MAE:  1192.32 MW
+   RMSE: 3639.43 MW
+   MAPE: 4.99%
+
+📊 Evaluating on test set...
+   MAE:  2604.57 MW
+   RMSE: 8537.60 MW
+   MAPE: 5.71%
+
+💾 Saving global model to: C:\Users\DEV\Desktop\Minor Project\models\global_model.joblib
+   ✓ Model saved
+
+================================================================================
+STEP 2: TRAINING PER-STATE RESIDUAL MODELS
+================================================================================
+Threshold: Only keep models that improve global RMSE by > 5.0%
+
+[1/36] Training residual model for state: AN
+        📚 Training on 6031 samples...
+        Global RMSE:    46.06 MW
+        Corrected RMSE: 22.32 MW
+        Improvement:    51.53%
+        ✅ SAVED (improvement > 5.0%)
+[2/36] Training residual model for state: AP
+        📚 Training on 6031 samples...
+        Global RMSE:    1157.60 MW
+        Corrected RMSE: 2287.42 MW
+        Improvement:    -97.60%
+        ❌ NOT saved (improvement < 5.0%)
+[3/36] Training residual model for state: AR
+        📚 Training on 6032 samples...
+        Global RMSE:    1080.70 MW
+        Corrected RMSE: 781.38 MW
+        Improvement:    27.70%
+        ✅ SAVED (improvement > 5.0%)
+[4/36] Training residual model for state: AS
+        📚 Training on 6031 samples...
+        Global RMSE:    361.44 MW
+        Corrected RMSE: 1644.17 MW
+        Improvement:    -354.89%
+        ❌ NOT saved (improvement < 5.0%)
+[5/36] Training residual model for state: BH
+        📚 Training on 6031 samples...
+        Global RMSE:    602.06 MW
+        Corrected RMSE: 1726.75 MW
+        Improvement:    -186.81%
+        ❌ NOT saved (improvement < 5.0%)
+[6/36] Training residual model for state: CH
+        📚 Training on 6031 samples...
+        Global RMSE:    1333.15 MW
+        Corrected RMSE: 2259.32 MW
+        Improvement:    -69.47%
+        ❌ NOT saved (improvement < 5.0%)
+[7/36] Training residual model for state: CHH
+        📚 Training on 6031 samples...
+        Global RMSE:    900.01 MW
+        Corrected RMSE: 2219.92 MW
+        Improvement:    -146.66%
+        ❌ NOT saved (improvement < 5.0%)
+[8/36] Training residual model for state: DL
+        📚 Training on 6031 samples...
+        Global RMSE:    1994.29 MW
+        Corrected RMSE: 4217.53 MW
+        Improvement:    -111.48%
+        ❌ NOT saved (improvement < 5.0%)
+[9/36] Training residual model for state: DNHD
+        📚 Training on 6031 samples...
+        Global RMSE:    410.27 MW
+        Corrected RMSE: 1644.82 MW
+        Improvement:    -300.91%
+        ❌ NOT saved (improvement < 5.0%)
+[10/36] Training residual model for state: GA
+        📚 Training on 6031 samples...
+        Global RMSE:    104.97 MW
+        Corrected RMSE: 86.80 MW
+        Improvement:    17.31%
+        ✅ SAVED (improvement > 5.0%)
+[11/36] Training residual model for state: GJ
+        📚 Training on 6032 samples...
+        Global RMSE:    2150.68 MW
+        Corrected RMSE: 2698.02 MW
+        Improvement:    -25.45%
+        ❌ NOT saved (improvement < 5.0%)
+[12/36] Training residual model for state: HP
+        📚 Training on 6031 samples...
+        Global RMSE:    3551.26 MW
+        Corrected RMSE: 4851.29 MW
+        Improvement:    -36.61%
+        ❌ NOT saved (improvement < 5.0%)
+[13/36] Training residual model for state: HR
+        📚 Training on 6031 samples...
+        Global RMSE:    1151.70 MW
+        Corrected RMSE: 3989.86 MW
+        Improvement:    -246.43%
+        ❌ NOT saved (improvement < 5.0%)
+[14/36] Training residual model for state: JH
+        📚 Training on 6031 samples...
+        Global RMSE:    901.19 MW
+        Corrected RMSE: 2506.90 MW
+        Improvement:    -178.18%
+        ❌ NOT saved (improvement < 5.0%)
+[15/36] Training residual model for state: JK
+        📚 Training on 6031 samples...
+        Global RMSE:    2469.20 MW
+        Corrected RMSE: 3305.75 MW
+        Improvement:    -33.88%
+        ❌ NOT saved (improvement < 5.0%)
+[16/36] Training residual model for state: KA
+        📚 Training on 6031 samples...
+        Global RMSE:    1696.38 MW
+        Corrected RMSE: 1824.29 MW
+        Improvement:    -7.54%
+        ❌ NOT saved (improvement < 5.0%)
+[17/36] Training residual model for state: KL
+        📚 Training on 6031 samples...
+        Global RMSE:    696.56 MW
+        Corrected RMSE: 1155.63 MW
+        Improvement:    -65.91%
+        ❌ NOT saved (improvement < 5.0%)
+[18/36] Training residual model for state: LA
+        📚 Training on 6031 samples...
+        Global RMSE:    2910.36 MW
+        Corrected RMSE: 1762.47 MW
+        Improvement:    39.44%
+        ✅ SAVED (improvement > 5.0%)
+[19/36] Training residual model for state: LD
+        📚 Training on 6032 samples...
+        Global RMSE:    42.44 MW
+        Corrected RMSE: 18.79 MW
+        Improvement:    55.72%
+        ✅ SAVED (improvement > 5.0%)
+[20/36] Training residual model for state: MH
+        📚 Training on 6031 samples...
+        Global RMSE:    9484.56 MW
+        Corrected RMSE: 9265.62 MW
+        Improvement:    2.31%
+        ❌ NOT saved (improvement < 5.0%)
+[21/36] Training residual model for state: ML
+        📚 Training on 6031 samples...
+        Global RMSE:    100.96 MW
+        Corrected RMSE: 456.40 MW
+        Improvement:    -352.04%
+        ❌ NOT saved (improvement < 5.0%)
+[22/36] Training residual model for state: MN
+        📚 Training on 6031 samples...
+        Global RMSE:    297.86 MW
+        Corrected RMSE: 1227.11 MW
+        Improvement:    -311.98%
+        ❌ NOT saved (improvement < 5.0%)
+[23/36] Training residual model for state: MP
+        📚 Training on 6031 samples...
+        Global RMSE:    1698.39 MW
+        Corrected RMSE: 2574.38 MW
+        Improvement:    -51.58%
+        ❌ NOT saved (improvement < 5.0%)
+[24/36] Training residual model for state: MZ
+        📚 Training on 6031 samples...
+        Global RMSE:    120.96 MW
+        Corrected RMSE: 833.21 MW
+        Improvement:    -588.83%
+        ❌ NOT saved (improvement < 5.0%)
+[25/36] Training residual model for state: NL
+        📚 Training on 6032 samples...
+        Global RMSE:    173.46 MW
+        Corrected RMSE: 800.18 MW
+        Improvement:    -361.31%
+        ❌ NOT saved (improvement < 5.0%)
+[26/36] Training residual model for state: OD
+        📚 Training on 6032 samples...
+        Global RMSE:    564.16 MW
+        Corrected RMSE: 1781.67 MW
+        Improvement:    -215.81%
+        ❌ NOT saved (improvement < 5.0%)
+[27/36] Training residual model for state: PB
+        📚 Training on 6031 samples...
+        Global RMSE:    1186.45 MW
+        Corrected RMSE: 2367.67 MW
+        Improvement:    -99.56%
+        ❌ NOT saved (improvement < 5.0%)
+[28/36] Training residual model for state: PD
+        📚 Training on 6031 samples...
+        Global RMSE:    143.83 MW
+        Corrected RMSE: 595.89 MW
+        Improvement:    -314.29%
+        ❌ NOT saved (improvement < 5.0%)
+[29/36] Training residual model for state: RJ
+        📚 Training on 6031 samples...
+        Global RMSE:    12687.85 MW
+        Corrected RMSE: 12804.46 MW
+        Improvement:    -0.92%
+        ❌ NOT saved (improvement < 5.0%)
+[30/36] Training residual model for state: SK
+        📚 Training on 6031 samples...
+        Global RMSE:    749.44 MW
+        Corrected RMSE: 734.33 MW
+        Improvement:    2.02%
+        ❌ NOT saved (improvement < 5.0%)
+[31/36] Training residual model for state: TN
+        📚 Training on 6031 samples...
+        Global RMSE:    48053.80 MW
+        Corrected RMSE: 44421.36 MW
+        Improvement:    7.56%
+        ✅ SAVED (improvement > 5.0%)
+[32/36] Training residual model for state: TR
+        📚 Training on 6031 samples...
+        Global RMSE:    196.17 MW
+        Corrected RMSE: 680.04 MW
+        Improvement:    -246.65%
+        ❌ NOT saved (improvement < 5.0%)
+[33/36] Training residual model for state: TS
+        📚 Training on 6032 samples...
+        Global RMSE:    1135.30 MW
+        Corrected RMSE: 2666.80 MW
+        Improvement:    -134.90%
+        ❌ NOT saved (improvement < 5.0%)
+[34/36] Training residual model for state: UK
+        📚 Training on 6032 samples...
+        Global RMSE:    2236.82 MW
+        Corrected RMSE: 3425.71 MW
+        Improvement:    -53.15%
+        ❌ NOT saved (improvement < 5.0%)
+[35/36] Training residual model for state: UP
+        📚 Training on 6031 samples...
+        Global RMSE:    2335.59 MW
+        Corrected RMSE: 4832.80 MW
+        Improvement:    -106.92%
+        ❌ NOT saved (improvement < 5.0%)
+[36/36] Training residual model for state: WB
+        📚 Training on 6031 samples...
+        Global RMSE:    732.48 MW
+        Corrected RMSE: 1846.55 MW
+        Improvement:    -152.10%
+        ❌ NOT saved (improvement < 5.0%)
+
+================================================================================
+TRAINING SUMMARY
+================================================================================
+
+✅ GLOBAL MODEL:
+   Test RMSE: 8537.60 MW
+   Test MAPE: 5.71%
+   Location:  C:\Users\DEV\Desktop\Minor Project\models\global_model.joblib
+   Input Format: DataFrame with 16 features
+
+✅ PER-STATE RESIDUAL MODELS:
+   Total states: 36
+   States with residual models: 6
+   States: AN, AR, GA, LA, LD, TN
+   Location: C:\Users\DEV\Desktop\Minor Project\models\state_models
+
+📊 DETAILED RESULTS:
+   Saved to: C:\Users\DEV\Desktop\Minor Project\models\training_results. csv
+
+================================================================================
+Top 10 states by improvement:
+================================================================================
+ 1.  LD | RMSE:    42.44 →    18.79 | Improvement:  55.72% | ✅ SAVED
+ 2.  AN | RMSE:    46.06 →    22.32 | Improvement:  51.53% | ✅ SAVED
+ 3.  LA | RMSE:  2910.36 →  1762.47 | Improvement:  39.44% | ✅ SAVED
+ 4.  AR | RMSE:  1080.70 →   781.38 | Improvement:  27.70% | ✅ SAVED
+ 5.  GA | RMSE:   104.97 →    86.80 | Improvement:  17.31% | ✅ SAVED
+ 6.  TN | RMSE: 48053.80 → 44421.36 | Improvement:   7.56% | ✅ SAVED
+ 7.  MH | RMSE:  9484.56 →  9265.62 | Improvement:   2.31% | ❌ REJECTED
+ 8.  SK | RMSE:   749.44 →   734.33 | Improvement:   2.02% | ❌ REJECTED
+ 9.  RJ | RMSE: 12687.85 → 12804.46 | Improvement:  -0.92% | ❌ REJECTED
+10.  KA | RMSE:  1696.38 →  1824.29 | Improvement:  -7.54% | ❌ REJECTED
+
+================================================================================
+Bottom 10 states (least improvement):
+================================================================================
+ 1.  MZ | RMSE:   120.96 →   833.21 | Improvement: -588.83% | ❌ REJECTED
+ 2.  NL | RMSE:   173.46 →   800.18 | Improvement: -361.31% | ❌ REJECTED
+ 3.  AS | RMSE:   361.44 →  1644.17 | Improvement: -354.89% | ❌ REJECTED
+ 4.  ML | RMSE:   100.96 →   456.40 | Improvement: -352.04% | ❌ REJECTED
+ 5.  PD | RMSE:   143.83 →   595.89 | Improvement: -314.29% | ❌ REJECTED
+ 6.  MN | RMSE:   297.86 →  1227.11 | Improvement: -311.98% | ❌ REJECTED
+ 7. DNHD | RMSE:   410.27 →  1644.82 | Improvement: -300.91% | ❌ REJECTED
+ 8.  TR | RMSE:   196.17 →   680.04 | Improvement: -246.65% | ❌ REJECTED
+ 9.  HR | RMSE:  1151.70 →  3989.86 | Improvement: -246.43% | ❌ REJECTED
+10.  OD | RMSE:   564.16 →  1781.67 | Improvement: -215.81% | ❌ REJECTED
+
+################################################################################
+# ✅ TRAINING COMPLETE - ALL MODELS READY FOR PRODUCTION
+# Consumer pipeline expects SAME input format - NO CHANGES NEEDED
+################################################################################
